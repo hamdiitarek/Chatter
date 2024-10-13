@@ -7,6 +7,6 @@ const authRoutes = Router();
 
 authRoutes.post("/signup", Signup);
 authRoutes.post("/login", Login);
-authRoutes.get("/userinfo", verifyToken, getUserInfo);
+authRoutes.get("/userinfo", verifyToken, getUserInfo);  
 
 export default authRoutes;

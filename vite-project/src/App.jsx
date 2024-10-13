@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import './App.css';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import Login from './pages/auth/login';
 import Signup from './pages/auth/signup';
 import Forgot from './pages/auth/forgot';
@@ -17,19 +17,26 @@ function App() {
 
   const getUserData = async () => {
     try {
-      const response = await apiclient.get(GET_USER_INFO, {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setUserInfo(undefined);
+        setLoading(false);
+        return;
+      }
+
+      const response = await apiclient.get(
+        GET_USER_INFO, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
   
-      if (response.status === 200 && response.data.id) {
-        setUserInfo(response.data);
-      } else {
-        console.error('Failed to fetch user data:', response.status, response.data);
-        setUserInfo(undefined);
-      }
-    } catch (error) {
+      setUserInfo(response.data);
+      } catch (error) {
       console.error('Error fetching user data:', error);
       setUserInfo(undefined);
+      // window.location.href = '/login';
     } finally {
       setLoading(false);
     }

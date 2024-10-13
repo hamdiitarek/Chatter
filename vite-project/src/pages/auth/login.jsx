@@ -55,7 +55,9 @@ export default function Login() {
       console.log("Full response:", response);
 
       // Access email and profileSetup directly from response.data
-      const { email: userEmail, profileSetup } = response.data;
+      const { email: userEmail, profileSetup,token } = response.data;
+
+      localStorage.setItem('token', token);
 
       if (userEmail) {
         console.log("User email:", userEmail);

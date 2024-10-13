@@ -126,7 +126,8 @@ export const Login = async (request, response) => {
     phone: user.phone,
 		createdAt: user.createdAt,
 		profilePic: user.profilePic,
-		profileSetup: user.profileSetup
+		profileSetup: user.profileSetup,
+    token: token
 	  });
 	} catch (error) {
 	  console.error("Login Error: ", error);
