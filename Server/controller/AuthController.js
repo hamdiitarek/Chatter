@@ -3,6 +3,8 @@ import User from "../models/UserModel.js";
 import pkg from 'jsonwebtoken';
 const { sign } = pkg;
 import bcrypt from 'bcryptjs'; // Use default import for bcryptjs
+import {renameSync} from 'fs';
+import {unlinkSync} from 'fs';
 
 const maxAge = 3 * 24 * 60 * 60 * 1000; // Token expiry time (3 days)
 
@@ -170,3 +172,97 @@ export const Login = async (request, response) => {
             return response.status(500).send("Internal 3Server Error");
           }
    };
+
+   export const updateProfile = async (request, response) => {
+    try {
+      
+      const {userId} = request;
+      const {firstName, lastName} = request.body;
+     
+      if (!firstName || !lastName) {
+        return response.status(400).send("First Name and Last Name are required.");
+      }
+
+      const userData = await User.findByIdAndUpdate(userId
+        , {firstName, lastName, profileSetup: true}
+        , {new: true, runValidators: true}
+      );
+
+      return response.status(200).json({
+        
+          id: userData._id,
+          email: userData.email,
+          profileSetup: userData.profileSetup,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          profilePic: userData.profilePic,
+        
+      });
+
+            // return response.status(200).json({
+            // id: user._id,
+            // email: user.email,
+            // firstName: user.firstName,
+            // lastName: user.lastName,
+            // phone: user.phone,
+            // createdAt: user.createdAt,
+            // profilePic: user.profilePic,
+            // profileSetup: user.profileSetup
+            // });
+          } catch (error) {
+            console.error("Login Error: ", error);
+            return response.status(500).send("Internal 3Server Error");
+          }
+   };
+
+   export const addProfileImage = async (request, response, next) => {
+     try {
+       if (!request.file) {
+         return response.status(400).send("File is required.");
+       }
+   
+       const date = Date.now();
+       let fileName = "upload/profile/" + date + request.file.originalname;
+        renameSync(request.file.path, fileName);
+
+        const UpdateUser =  await User.findByIdAndUpdate(request.userId, {profilePic: fileName}, {new: true, runValidators: true} );
+   
+       // Assuming you have some logic to save the file and update the user data
+       const userData = await User.findByIdAndUpdate(request.userId, { profilePic: fileName }, { new: true, runValidators: true });
+   
+       return response.status(200).json({
+        
+         image: UpdateUser .profilePic,
+         
+       });
+     } catch (error) {
+       console.error("Error: ", error);
+       return response.status(500).send("Internal Server Error");
+     }
+   }
+
+  
+
+export const deleteProfileImage = async (request, response, next) => {
+  try {
+    const { userId } = request;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return response.status(404).send("User not found.");
+    }
+
+    if (user.profilePic) {
+      unlinkSync(user.profilePic);
+    }
+
+    user.profilePic = null;
+    await user.save();
+    
+
+    return response.status(200).json({ message: "Profile image removed successfully." });
+  } catch (error) {
+    console.error("Error: ", error);
+    return response.status(500).send("Internal Server Error");
+  }
+};

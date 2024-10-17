@@ -23,6 +23,7 @@ app.use(cors(
 app.use(cookieParser());
 app.use(express.json());
 app.use( '/api/auth', authRoutes);
+app.use("/upload/profile", express.static("upload/profile"));
 
 const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

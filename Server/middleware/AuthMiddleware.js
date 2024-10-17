@@ -1,12 +1,17 @@
 import jwt from 'jsonwebtoken';
 
 export const verifyToken = (request, response, next) => {
-    // Retrieve token from cookies
-    // let {token} = request.header[authorization];
+    // Check if authorization header exists
+    const authHeader = request.headers.authorization;
 
-    const token = request.headers.authorization.split(" ")[1];
+    if (!authHeader) {
+        return response.status(403).json({ message: "Authorization header not provided" });
+    }
 
-    // Check if token exists
+    // Assuming the format "Bearer <token>"
+    const token = authHeader.split(" ")[1];
+
+    // Check if the token exists
     if (!token) {
         return response.status(403).json({ message: "No token provided" });
     }
@@ -18,7 +23,7 @@ export const verifyToken = (request, response, next) => {
         }
 
         // Assign decoded userId to request object for further use
-        request.userId = decoded.userId; 
+        request.userId = decoded.userId;
         next(); // Proceed to the next middleware or route handler
     });
 };
