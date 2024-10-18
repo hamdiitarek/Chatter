@@ -7,7 +7,7 @@ import Forgot from './pages/auth/forgot';
 import Profile from './pages/profile';
 import Chat from './pages/chat';
 import Home from './pages/home';
-import { UseAppStore } from './store';
+import UseAppStore from './store';
 import apiclient from './lib/api_client';
 import { GET_USER_INFO } from './utils/constants';
 

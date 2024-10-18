@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { UseAppStore } from "@/store";
+import UseAppStore from "@/store";
 import { Avatar } from "@/components/ui/avatar";
 import { FaTrash, FaPlus } from "react-icons/fa";
 import { toast } from "sonner";
@@ -20,6 +20,7 @@ export default function Profile() {
   const [hovered, setHovered] = useState(false);
   const fileUploadRef = useRef(null);
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (userInfo) {
@@ -45,7 +46,6 @@ export default function Profile() {
   const saveChanges = async () => {
     if (validateProfile()) {
       try {
-        const token = localStorage.getItem("token");
         const response = await apiclient.post(UPDATE_PROFILE_ROUTE, { firstName, lastName }, {
           headers: {
             Authorization: `Bearer ${token}`
@@ -76,7 +76,7 @@ export default function Profile() {
     try {
       const response = await apiclient.post(Update_Profile_Image_Route, formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         }
       });
@@ -102,7 +102,7 @@ export default function Profile() {
     try {
       await apiclient.delete(Delete_Profile_Image_Route, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${token}`
         }
       });
 
@@ -120,6 +120,24 @@ export default function Profile() {
       toast.error("Failed to delete profile image.");
     } finally {
       setIsLoading(false); // End loading
+    }
+  };
+
+  const updateProfile = async (profileData) => {
+    try {
+      const response = await apiclient.put(
+        UPDATE_PROFILE_ROUTE,
+        profileData,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // Handle response
+    } catch (error) {
+      console.error('Error updating profile:', error);
     }
   };
 
@@ -195,4 +213,3 @@ export default function Profile() {
     </Card>
   );
 }
-``

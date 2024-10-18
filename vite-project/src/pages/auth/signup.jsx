@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { toast } from "sonner";
 import apiclient from "@/lib/api_client";
 import { Signup_Route } from "@/utils/constants";
-import { UseAppStore } from "@/store"; // Import the Zustand store
+import  UseAppStore from "@/store"; // Import the Zustand store
 
 export const description =
   "A sign up form with first name, last name, email, and password inside a card. There's an option to sign up with GitHub and a link to login if you already have an account";

@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import apiclient from "@/lib/api_client";
 import { Login_Route } from "@/utils/constants";
-import { UseAppStore } from "@/store"; // Import the Zustand store
+import  UseAppStore  from "@/store"; // Import the Zustand store
 
 export const description =
   "A login form with email and password. There's an option to login with Google and a link to sign up if you don't have an account.";

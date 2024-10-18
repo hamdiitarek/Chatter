@@ -1,5 +1,5 @@
 
-import { UseAppStore } from './store';
+import UseAppStore from './store';
 import apiclient from './lib/api_client';
 import { GET_USER_INFO } from './utils/constants';
 import { useNavigate } from "react-router-dom";
