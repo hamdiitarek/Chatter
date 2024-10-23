@@ -32,8 +32,13 @@ export default function Signup() {
 
   // Validation function
   const validateSignup = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.length) {
       toast.error("Email is required.");
+      return false;
+    }
+    if (!emailRegex.test(email)) {
+      toast.error("Invalid email format.");
       return false;
     }
     if (!firstName.length) {
