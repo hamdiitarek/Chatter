@@ -127,8 +127,7 @@ const NewDM = () => {
             <div className="flex-1 flex mt-5 flex-col justify-center items-center duration-1000 transition-all">
               <div className="text-opacity-80 text-white flex flex-col gap-5 items-center mt-5 lg:text-2xl text-xl transition-all duration-300 text-center">
                 <h3 className="poppins-medium">
-                  Hi<span className="text-teal-500">!</span> search new
-                  <span className="text-teal-500"> Contact.</span>
+                 
                 </h3>
               </div>
             </div>

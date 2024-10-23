@@ -56,19 +56,89 @@ upload/
 
 ## Vite Project Directory `vite-project/`
 ```
-.env
-.gitignore
-components.json
-eslint.config.js
-index.html
-jsconfig.json
-package.json
-postcss.config.js
-public/
-README.md
-src/
-tailwind.config.js
-vite.config.js
+.
+├── README.md
+├── components.json
+├── eslint.config.js
+├── index.html
+├── jsconfig.json
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── public
+│   └── vite.svg
+├── src
+│   ├── App.css
+│   ├── App.jsx
+│   ├── Auth.jsx
+│   ├── assets
+│   │   ├── lottie-json.json
+│   │   └── react.svg
+│   ├── components
+│   │   ├── Navbar.jsx
+│   │   ├── Statistics.jsx
+│   │   ├── contact-list.jsx
+│   │   ├── hero.png
+│   │   ├── logo.png
+│   │   └── ui
+│   │       ├── avatar.jsx
+│   │       ├── badge.jsx
+│   │       ├── button.jsx
+│   │       ├── card.jsx
+│   │       ├── command.jsx
+│   │       ├── dialog.jsx
+│   │       ├── input.jsx
+│   │       ├── label.jsx
+│   │       ├── multipleselect.jsx
+│   │       ├── navigation-menu.jsx
+│   │       ├── scroll-area.jsx
+│   │       ├── sonner.jsx
+│   │       └── tooltip.jsx
+│   ├── context
+│   │   └── SocketContext.jsx
+│   ├── index.css
+│   ├── lib
+│   │   ├── api_client.js
+│   │   └── utils.js
+│   ├── main.jsx
+│   ├── pages
+│   │   ├── auth
+│   │   │   ├── forgot.jsx
+│   │   │   ├── login.jsx
+│   │   │   └── signup.jsx
+│   │   ├── chat
+│   │   │   ├── components
+│   │   │   │   ├── chat-container
+│   │   │   │   │   ├── components
+│   │   │   │   │   │   ├── chat-header
+│   │   │   │   │   │   │   └── index.jsx
+│   │   │   │   │   │   ├── message-bar
+│   │   │   │   │   │   │   └── index.jsx
+│   │   │   │   │   │   └── message-container
+│   │   │   │   │   │       └── index.jsx
+│   │   │   │   └── index.jsx
+│   │   │   ├── contacts-container
+│   │   │   │   ├── components
+│   │   │   │   │   ├── create-channel
+│   │   │   │   │   │   └── index.jsx
+│   │   │   │   │   ├── new-dm
+│   │   │   │   │   │   └── index.jsx
+│   │   │   │   │   └── profile-info
+│   │   │   │   │       └── index.jsx
+│   │   │   └── empty-chat-container
+│   │   │       └── index.jsx
+│   │   └── index.jsx
+│   │   ├── home
+│   │   │   ├── Home.css
+│   │   │   └── index.jsx
+│   │   └── profile
+│   │       └── index.jsx
+│   ├── store
+│   │   └── index.js
+│   └── utils
+│       └── constants.js
+├── tailwind.config.js
+└── vite.config.js
 ```
 
 The `vite-project` directory contains the frontend logic of the application. Below is a detailed description of its structure:
