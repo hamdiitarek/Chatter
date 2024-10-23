@@ -14,7 +14,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import apiclient from "@/lib/api_client";
 import { Login_Route } from "@/utils/constants";
-import  UseAppStore  from "@/store"; // Import the Zustand store
+import  UseAppStore  from "@/store"; 
+
 
 export const description =
   "A login form with email and password. There's an option to login with Google and a link to sign up if you don't have an account.";
@@ -25,7 +26,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const setUserInfo = UseAppStore((state) => state.setUserInfo); // Get the setUserInfo function from the store
+  const setUserInfo = UseAppStore((state) => state.setUserInfo); 
 
   // Validation function for login
   const validateLogin = () => {
@@ -51,17 +52,14 @@ export default function Login() {
         { withCredentials: true }
       );
 
-      // Log the full response to check its structure
       console.log("Full response:", response);
 
-      // Access email and profileSetup directly from response.data
       const { email: userEmail, profileSetup,token } = response.data;
 
       localStorage.setItem('token', token);
 
       if (userEmail) {
         console.log("User email:", userEmail);
-        // Set the userInfo in the Zustand store
         setUserInfo(response.data);
       } else {
         console.error("User email is undefined");
@@ -70,7 +68,6 @@ export default function Login() {
       if (profileSetup !== undefined) {
         toast.success("Login successful!");
 
-        // Redirect based on profile setup status
         if (profileSetup) {
           navigate("/chat");
         } else {
@@ -106,7 +103,7 @@ export default function Login() {
               type="email"
               placeholder="m@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)} // Update email state
+              onChange={(e) => setEmail(e.target.value)} 
               required
             />
           </div>

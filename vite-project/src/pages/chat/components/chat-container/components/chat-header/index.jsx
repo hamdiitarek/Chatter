@@ -7,6 +7,7 @@ const ChatHeader = () => {
   const { closeChat, selectedChatData, selectedChatType } = UseAppStore();
 
   return (
+    console.log("selectedChatData", selectedChatData),
     <div className="h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between px-4 md:px-10 lg:px-20">
       {/* Adjusted padding for better responsiveness */}
       <div className="flex items-center gap-4">
@@ -15,16 +16,14 @@ const ChatHeader = () => {
             <Avatar className="h-12 w-12 rounded-full overflow-hidden">
               {selectedChatData.profilePic ? (
                 <AvatarImage
-                  src={`${HOST}/${selectedChatData.profilePic}`}
+                src={`${HOST}/${selectedChatData.profilePic}`}
                   alt="profile"
                   className="object-cover w-full h-full bg-black"
                 />
               ) : (
                 <div className="uppercase h-12 w-12 text-lg border border-gray-600 flex items-center justify-center rounded-full bg-gray-700 text-white">
-                  {selectedChatData.firstName
-                    ? selectedChatData.firstName.charAt(0)
-                    : selectedChatData.email.charAt(0)}
-                </div>
+                      {selectedChatData.firstName ? selectedChatData.firstName.charAt(0) : selectedChatData.email.charAt(0)}
+                    </div>
               )}
             </Avatar>
           ) : (

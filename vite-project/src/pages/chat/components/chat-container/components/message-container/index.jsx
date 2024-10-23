@@ -251,7 +251,7 @@ const MessageContainer = () => {
       {showImage && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
           <div className="relative">
-            <img src={imageURL} alt="Large view" className="max-w-full max-h-full" />
+            <img src={`${HOST}/${imageURL}`} alt="Large view" className="max-w-full max-h-full" />
             <button
               className="absolute top-2 right-2 bg-white text-red-500 rounded-full p-2"
               onClick={() => setShowImage(false)}

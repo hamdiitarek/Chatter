@@ -16,7 +16,8 @@ const ProfileInfo = () => {
             const response = await apiclient.post(LOGOUT_ROUTE, {}, { withCredentials: true });
 
             if (response.status === 200) {
-                navigate("/auth");
+                localStorage.removeItem("token"); 
+                navigate("/login");
                 setUserInfo(null);
                 setSelectedChatType(undefined);
                 setSelectedChatData(undefined);

@@ -23,6 +23,9 @@ const MessageBar = () => {
   const [message, setMessage] = useState("");
   const [emojiPickerOpen, setEmojiPickerOpen] = useState(false);
 
+  const token = localStorage.getItem('token');
+
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (emojiRef.current && !emojiRef.current.contains(event.target)) {
@@ -60,7 +63,7 @@ const MessageBar = () => {
       socket.emit("send-channel-message", messagePayload);
     }
 
-    setMessage(""); // Clear the message input
+    setMessage(""); 
   };
 
   const handleAttachmentClick = () => {
@@ -79,6 +82,9 @@ const MessageBar = () => {
 
         const response = await apiclient.post(UPLOAD_FILE_ROUTE, formData, {
           withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           onUploadProgress: (data) => {
             setFileUploadProgress(Math.round((100 * data.loaded) / data.total));
           },
@@ -110,7 +116,6 @@ const MessageBar = () => {
 
   return (
     <div className="h-[10vh] bg-[#1c1d25] flex justify-between items-center px-4 md:px-8 gap-4 mb-6">
-      {/* Adjusted padding for better responsiveness */}
       <div className="flex-1 flex items-center bg-[#2a2b33] rounded-md p-2 gap-3">
         <input
           className="flex-1 bg-transparent text-white p-2 rounded-md focus:outline-none"
@@ -149,7 +154,7 @@ const MessageBar = () => {
         </div>
       </div>
       <button
-        className="bg-[#8417ff] rounded-md flex items-center justify-center p-3 hover:bg-[#741bda] transition duration-300"
+        className="bg-teal-900 rounded-md flex items-center justify-center p-3 hover:bg-teal-700 transition duration-300"
         onClick={handleSendMessage}
       >
         <IoSend className="text-xl" />

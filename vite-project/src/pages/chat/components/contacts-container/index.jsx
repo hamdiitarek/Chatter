@@ -40,12 +40,13 @@ const ContactsContainer = () => {
         });
         if (response.data.channels) {
           setChannels(response.data.channels);
+          console.log("Updated channels in store: ", response.data.channels); 
         }
       } catch (error) {
         console.error("Error fetching channels:", error);
       }
     };
-
+  
     getContacts();
     getChannels();
   }, [setChannels, setDirectMessagesContacts]);
@@ -70,7 +71,7 @@ const ContactsContainer = () => {
           <CreateChannel />
         </div>
         <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
-          <ContactList contacts={channels} isChannel={true} />
+        <ContactList contacts={channels} isChannel={true} />
         </div>
       </div>
       <ProfileInfo />

@@ -2,13 +2,14 @@ import { Router } from "express";
 import { verifyToken } from "../middleware/AuthMiddleware.js";
 import { getMessages, uploadFile } from "../controller/MessagesController.js";
 import multer from "multer";
+import path from "path";
 
 const messagesRoutes = Router();
 
 // Configure Multer with file storage and filename generation
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/files"); 
+    cb(null, "upload/files"); 
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);

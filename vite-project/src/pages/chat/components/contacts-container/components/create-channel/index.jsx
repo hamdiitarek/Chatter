@@ -126,7 +126,7 @@ const CreateChannel = () => {
           </div>
           <div>
             <Button
-              className="w-full bg-purple-600 hover:bg-purple-800 transition-all duration-300 text-white"
+              className="w-full bg-teal-600 hover:bg-teal-800 transition-all duration-300 text-white"
               onClick={createChannel}
             >
               Create Channel

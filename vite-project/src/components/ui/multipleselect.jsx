@@ -217,7 +217,6 @@ const MultipleSelector = React.forwardRef(
       [options, selected]
     );
 
-    /** Avoid Creatable Selector freezing or lagging when paste a long string. */
     const commandFilter = React.useCallback(() => {
       if (commandProps?.filter) {
         return commandProps.filter;
@@ -270,7 +269,7 @@ const MultipleSelector = React.forwardRef(
                 <Badge
                   key={option.value}
                   className={cn(
-                    "data-[disabled]:bg-muted-foreground data-[disabled]:text-muted data-[disabled]:hover:bg-muted-foreground bg-purple-500 p-2",
+                    "data-[disabled]:bg-muted-foreground data-[disabled]:text-muted data-[disabled]:hover:bg-muted-foreground bg-teal-500 p-2",
                     "data-[fixed]:bg-muted-foreground data-[fixed]:text-muted data-[fixed]:hover:bg-muted-foreground",
                     badgeClassName
                   )}
@@ -294,7 +293,7 @@ const MultipleSelector = React.forwardRef(
                     }}
                     onClick={() => handleUnselect(option)}
                   >
-                    <X className="h-4 w-4 text-white hover:text-purple-500" />
+                    <X className="h-4 w-4 text-white hover:text-teal-500" />
                   </button>
                 </Badge>
               );
