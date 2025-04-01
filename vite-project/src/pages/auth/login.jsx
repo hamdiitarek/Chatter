@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,25 +10,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import apiclient from "@/lib/api_client";
 import { Login_Route } from "@/utils/constants";
-import  UseAppStore  from "@/store"; 
-
-
-export const description =
-  "A login form with email and password. There's an option to login with Google and a link to sign up if you don't have an account.";
-
+import UseAppStore from "@/store";
 
 export default function Login() {
-  // State hooks for email and password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const setUserInfo = UseAppStore((state) => state.setUserInfo); 
+  const setUserInfo = UseAppStore((state) => state.setUserInfo);
 
-  // Validation function for login
   const validateLogin = () => {
     if (!email.length) {
       toast.error("Email is required.");
@@ -41,7 +33,6 @@ export default function Login() {
     return true;
   };
 
-  // Handle login
   const handleLogin = async () => {
     if (!validateLogin()) return;
 
@@ -52,87 +43,75 @@ export default function Login() {
         { withCredentials: true }
       );
 
-      console.log("Full response:", response);
-
-      const { email: userEmail, profileSetup,token } = response.data;
+      const { token, profileSetup } = response.data;
 
       localStorage.setItem('token', token);
+      setUserInfo(response.data);
 
-      if (userEmail) {
-        console.log("User email:", userEmail);
-        setUserInfo(response.data);
-      } else {
-        console.error("User email is undefined");
-      }
-
-      if (profileSetup !== undefined) {
-        toast.success("Login successful!");
-
-        if (profileSetup) {
-          navigate("/chat");
-        } else {
-          navigate("/profile");
-        }
-      } else {
-        toast.error("Login failed. No user information returned.");
-      }
+      toast.success("Login successful!");
+      navigate(profileSetup ? "/chat" : "/profile");
     } catch (error) {
       if (error.response?.status === 401) {
         toast.error("Invalid credentials.");
       } else {
         toast.error("Login failed. Please try again.");
       }
-      console.error("Login error:", error);
     }
   };
 
   return (
-    <Card className="max-w-sm">
-      <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <Label htmlFor="email" className="text-left">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)} 
-              required
-            />
-          </div>
-          <div className="grid gap-2">
-            <div className="flex items-center">
-              <Label htmlFor="password">Password</Label>
-              <Link to="/forgot" className="ml-auto inline-block text-sm underline">
-                Forgot your password?
+    <div className="flex items-center justify-center min-h-screen p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-xl sm:text-2xl">Login</CardTitle>
+          <CardDescription>
+            Enter your email below to login to your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="grid gap-2">
+              <div className="flex items-center">
+                <Label htmlFor="password">Password</Label>
+                <Link to="/forgot" className="ml-auto inline-block text-sm underline hover:text-blue-600">
+                  Forgot your password?
+                </Link>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <Button 
+              type="button" 
+              className="w-full" 
+              onClick={handleLogin}
+            >
+              Login
+            </Button>
+            <div className="text-center text-sm">
+              Don't have an account?{" "}
+              <Link to="/signup" className="underline hover:text-blue-600">
+                Sign up
               </Link>
             </div>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // Update password state
-              required
-            />
           </div>
-          <Button type="button" className="w-full" onClick={handleLogin}>
-            Login
-          </Button>
-        </div>
-        <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{" "}
-          <Link to="/signup" className="underline">
-            Sign up
-          </Link>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -5,15 +5,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const ChatContainer = () => {
   return (
-    <div className="fixed top-0 left-[35vw] lg:left-[30vw] xl:left-[25vw] w-[65vw] lg:w-[70vw] xl:w-[75vw] h-screen bg-neutral-50 flex flex-col"> 
-      {/* Flexbox to manage column layout with full height */}
+    <div className="flex-1 flex flex-col bg-white dark:bg-gray-800 h-screen">
       <ChatHeader />
-      <ScrollArea className="flex-grow overflow-auto">
-        {/* MessageContainer takes up remaining height, allowing for scrolling */}
+      <ScrollArea className="flex-1 overflow-auto">
         <MessageContainer />
       </ScrollArea>
-      <div className="sticky w-full bg-[#1c1d25]">
-        {/* Sticky positioning keeps the message bar at the bottom */}
+      <div className="sticky bottom-0 w-full bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
         <MessageBar />
       </div>
     </div>

@@ -1,0 +1,40 @@
+# General
+.DS_Store
+*.log
+.env
+.env.local
+.env.development
+.env.production
+.vscode/
+.idea/
+
+# Vite/Vue/React
+dist/
+dist-ssr/
+*.local
+.vite/
+
+# Node
+node_modules/
+*.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Server specific
+Server/node_modules/
+Server/.env
+
+# Vite project specific
+vite-project/node_modules/
+vite-project/dist/
+
+# Vercel
+.vercel/
+
+# Database
+*.db
+*.sqlite

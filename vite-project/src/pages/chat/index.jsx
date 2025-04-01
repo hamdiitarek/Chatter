@@ -25,7 +25,7 @@ const Chat = () => {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    if (!userInfo.profileSetup) {
+    if (!userInfo?.profileSetup) {
       toast("Please setup profile to continue");
       navigate("/profile");
     }
@@ -39,10 +39,9 @@ const Chat = () => {
           Authorization: `Bearer ${token}`, 
         },
       });
-      // Handle response (e.g., update state with fetched contacts)
     } catch (error) {
       console.error('Error fetching contacts:', error);
-      // Consider more robust error handling (e.g., display error message to user)
+      toast.error("Failed to load contacts");
     }
   };
 
@@ -54,9 +53,9 @@ const Chat = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // Handle response
     } catch (error) {
       console.error('Error fetching DM contacts:', error);
+      toast.error("Failed to load messages");
     }
   };
 
@@ -68,9 +67,9 @@ const Chat = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // Handle response
     } catch (error) {
       console.error('Error fetching user channels:', error);
+      toast.error("Failed to load channels");
     }
   };
 
@@ -81,24 +80,44 @@ const Chat = () => {
   }, []);
 
   return (
-    <div className="flex h-[100vh] text-white overflow-hidden">
-      {isUploading && (
-        <div className="h-[100vh] w-[100vw] fixed top-0 z-10 left-0 bg-black/80 flex items-center justify-center flex-col gap-5 backdrop-blur-lg">
-          <h5 className="text-5xl animate-pulse">Uploading File</h5>
-          {fileUploadProgress}%
-        </div>
-      )}
-      {isDownloading && (
-        <div className="h-[100vh] w-[100vw] fixed top-0 z-10 left-0 bg-black/80 flex items-center justify-center flex-col gap-5 backdrop-blur-lg">
-          <h5 className="text-5xl animate-pulse">Downloading File</h5>
-          {fileDownloadProgress}%
-        </div>
-      )}
+    <div className="flex flex-col md:flex-row h-screen w-full">
       <ContactsContainer />
-      {selectedChatType === undefined ? (
-        <EmptyChatContainer />
-      ) : (
-        <ChatContainer />
+      
+      {/* Chat area */}
+      <div className={`flex-1 ${selectedChatType === undefined ? 'hidden md:flex' : 'flex'}`}>
+        {selectedChatType === undefined ? (
+          <EmptyChatContainer />
+        ) : (
+          <ChatContainer />
+        )}
+      </div>
+      
+      {/* Upload overlay */}
+      {isUploading && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center flex-col gap-4 sm:gap-5 backdrop-blur-lg">
+          <h5 className="text-xl sm:text-2xl md:text-4xl animate-pulse">Uploading File</h5>
+          <div className="text-lg sm:text-xl md:text-2xl">{fileUploadProgress}%</div>
+          <div className="w-3/4 sm:w-2/3 md:w-1/2 h-2 bg-gray-700 rounded-full">
+            <div 
+              className="h-full bg-blue-500 rounded-full transition-all duration-300" 
+              style={{ width: `${fileUploadProgress}%` }}
+            ></div>
+          </div>
+        </div>
+      )}
+      
+      {/* Download overlay */}
+      {isDownloading && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center flex-col gap-4 sm:gap-5 backdrop-blur-lg">
+          <h5 className="text-xl sm:text-2xl md:text-4xl animate-pulse">Downloading File</h5>
+          <div className="text-lg sm:text-xl md:text-2xl">{fileDownloadProgress}%</div>
+          <div className="w-3/4 sm:w-2/3 md:w-1/2 h-2 bg-gray-700 rounded-full">
+            <div 
+              className="h-full bg-green-500 rounded-full transition-all duration-300" 
+              style={{ width: `${fileDownloadProgress}%` }}
+            ></div>
+          </div>
+        </div>
       )}
     </div>
   );

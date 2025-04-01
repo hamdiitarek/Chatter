@@ -7,52 +7,50 @@ const ChatHeader = () => {
   const { closeChat, selectedChatData, selectedChatType } = UseAppStore();
 
   return (
-    console.log("selectedChatData", selectedChatData),
-    <div className="h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between px-4 md:px-10 lg:px-20">
-      {/* Adjusted padding for better responsiveness */}
-      <div className="flex items-center gap-4">
-        <div className="relative w-12 h-12">
+    <div className="h-[10vh] min-h-[60px] border-b border-[#2f303b] flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10 bg-[#1e1f26]">
+      <div className="flex items-center gap-3 sm:gap-4">
+        <div className="relative w-10 h-10 sm:w-12 sm:h-12">
           {selectedChatType === "contact" ? (
-            <Avatar className="h-12 w-12 rounded-full overflow-hidden">
+            <Avatar className="h-full w-full rounded-full overflow-hidden">
               {selectedChatData.profilePic ? (
                 <AvatarImage
-                src={`${HOST}/${selectedChatData.profilePic}`}
+                  src={`${HOST}/${selectedChatData.profilePic}`}
                   alt="profile"
                   className="object-cover w-full h-full bg-black"
                 />
               ) : (
-                <div className="uppercase h-12 w-12 text-lg border border-gray-600 flex items-center justify-center rounded-full bg-gray-700 text-white">
-                      {selectedChatData.firstName ? selectedChatData.firstName.charAt(0) : selectedChatData.email.charAt(0)}
-                    </div>
+                <div className="uppercase h-full w-full text-lg border border-gray-600 flex items-center justify-center rounded-full bg-gray-700 text-white">
+                  {selectedChatData.firstName 
+                    ? selectedChatData.firstName.charAt(0) 
+                    : selectedChatData.email.charAt(0)}
+                </div>
               )}
             </Avatar>
           ) : (
-            <div className="bg-[#ffffff22] h-10 w-10 flex items-center justify-center rounded-full">
+            <div className="bg-[#ffffff22] h-full w-full flex items-center justify-center rounded-full text-white text-xl sm:text-2xl">
               #
             </div>
           )}
         </div>
-        <div className="text-black">
-          {/* Show the appropriate name or email */}
+        <div className="text-white max-w-[180px] sm:max-w-[220px] md:max-w-[300px] truncate">
           {selectedChatType === "channel" && selectedChatData.name}
           {selectedChatType === "contact" && (
             <>
               {selectedChatData.firstName
-                ? `${selectedChatData.firstName} ${selectedChatData.lastName}`
+                ? `${selectedChatData.firstName} ${selectedChatData.lastName || ''}`
                 : selectedChatData.email}
             </>
           )}
         </div>
       </div>
 
-      <div className="flex items-center">
-        <button
-          className="text-neutral-500 hover:text-white focus:outline-none transition duration-300"
-          onClick={closeChat}
-        >
-          <RiCloseFill className="text-3xl" />
-        </button>
-      </div>
+      <button
+        className="text-neutral-400 hover:text-white focus:outline-none transition duration-200 p-1 sm:p-2"
+        onClick={closeChat}
+        aria-label="Close chat"
+      >
+        <RiCloseFill className="text-2xl sm:text-3xl" />
+      </button>
     </div>
   );
 };

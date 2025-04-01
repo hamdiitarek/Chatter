@@ -28,30 +28,37 @@ const ProfileInfo = () => {
     };
 
     return (
-        <div className="absolute bottom-0 h-16 flex items-center justify-between px-10 w-full bg-gray-900 text-gray-100">
-            <div className="flex gap-3 items-center justify-center">
-                <div className="w-12 h-12 relative">
-                    <Avatar className="h-12 w-12 rounded-full overflow-hidden">
-                        {userInfo.profilePic ? (
-                            <AvatarImage src={`${HOST}/${userInfo.profilePic}`} alt="profile" className="object-cover w-full h-full bg-black" />
+        <div className="h-16 flex items-center justify-between px-4 w-full bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-100">
+            <div className="flex gap-2 items-center">
+                <div className="w-10 h-10 relative">
+                    <Avatar className="h-10 w-10 rounded-full overflow-hidden">
+                        {userInfo?.profilePic ? (
+                            <AvatarImage 
+                              src={`${HOST}/${userInfo.profilePic}`} 
+                              alt="profile" 
+                              className="object-cover w-full h-full" 
+                            />
                         ) : (
-                            <div className="uppercase h-12 w-12 text-lg border border-gray-700 flex items-center justify-center rounded-full bg-gray-700 text-white">
-                                {userInfo.firstName ? userInfo.firstName.charAt(0) : userInfo.email.charAt(0)}
+                            <div className="uppercase h-10 w-10 text-sm border border-gray-300 dark:border-gray-700 flex items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white">
+                                {userInfo?.firstName ? userInfo.firstName.charAt(0) : userInfo?.email?.charAt(0)}
                             </div>
                         )}
                     </Avatar>
                 </div>
-                <div className="text-white font-medium">
-                    {userInfo.firstName && userInfo.lastName ? `${userInfo.firstName} ${userInfo.lastName}` : ""}
+                <div className="text-sm font-medium truncate max-w-[120px]">
+                    {userInfo?.firstName && userInfo.lastName ? `${userInfo.firstName} ${userInfo.lastName}` : userInfo?.email}
                 </div>
             </div>
-            <div className="flex gap-5">
+            <div className="flex gap-3">
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger>
-                            <FiEdit2 className="text-blue-400 text-xl cursor-pointer" onClick={() => navigate("/profile")} />
+                            <FiEdit2 
+                              className="text-blue-500 dark:text-blue-400 text-lg cursor-pointer hover:text-blue-600 dark:hover:text-blue-300" 
+                              onClick={() => navigate("/profile")} 
+                            />
                         </TooltipTrigger>
-                        <TooltipContent className="bg-gray-800 text-white border-none">
+                        <TooltipContent className="bg-gray-800 dark:bg-gray-700 text-white border-none text-xs">
                             <p>Edit Profile</p>
                         </TooltipContent>
                     </Tooltip>
@@ -59,9 +66,12 @@ const ProfileInfo = () => {
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger>
-                            <IoPowerSharp className="text-red-500 text-xl cursor-pointer" onClick={logOut} />
+                            <IoPowerSharp 
+                              className="text-red-500 dark:text-red-400 text-lg cursor-pointer hover:text-red-600 dark:hover:text-red-300" 
+                              onClick={logOut} 
+                            />
                         </TooltipTrigger>
-                        <TooltipContent className="bg-gray-800 text-white border-none">
+                        <TooltipContent className="bg-gray-800 dark:bg-gray-700 text-white border-none text-xs">
                             <p>Logout</p>
                         </TooltipContent>
                     </Tooltip>
